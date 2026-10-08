@@ -163,6 +163,9 @@ folly::dynamic ImageProps::getDiffProps(const Props* prevProps) const {
     for (const auto& source : sources) {
       sourcesArray.push_back(toDynamic(source));
     }
+    if (!sources.empty() && !sources[0].headers.empty()) {
+      result["headers"] = sourcesArray[0]["headers"];
+    }
     result["source"] = sourcesArray;
   }
 

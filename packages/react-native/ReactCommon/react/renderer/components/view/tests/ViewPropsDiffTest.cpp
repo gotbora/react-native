@@ -103,6 +103,23 @@ TEST(ViewPropsDiffTest, gradientColorHintEmitsNullColor) {
                       "position", nullptr)))))}});
 }
 
+// BaseViewManager.setViewState replaces the whole state: an absent `selected`
+// deselects the view and an absent `disabled` re-enables it. Props 2.0 sends an
+// unset `checked` as "none", which Java ignores.
+TEST(ViewPropsDiffTest, emitsTheWholeAccessibilityStateWhenOneMemberChanges) {
+  auto state = [](bool busy) {
+    return dynamic::object("selected", true)("disabled", true)("busy", busy);
+  };
+  auto sentState = [&](bool busy) {
+    return dynamic::object(
+        "accessibilityState", state(busy)("checked", "none"));
+  };
+  expectPayloads({
+      {dynamic::object("accessibilityState", state(false)), sentState(false)},
+      {dynamic::object("accessibilityState", state(true)), sentState(true)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

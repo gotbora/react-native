@@ -87,6 +87,22 @@ TEST(ViewPropsDiffTest, removingShadowColorEmitsNull) {
   });
 }
 
+// The Android gradients treat a stop with a null color as a transition hint;
+// 0 is a transparent stop.
+TEST(ViewPropsDiffTest, gradientColorHintEmitsNullColor) {
+  expectPayloads({{dynamic::object(
+      "backgroundImage",
+      dynamic::array(
+          dynamic::object("type", "linear-gradient")(
+              "direction", dynamic::object("type", "angle")("value", 180))(
+              "colorStops",
+              dynamic::array(
+                  dynamic::object("color", kRed)("position", nullptr),
+                  dynamic::object("color", nullptr)("position", "20%"),
+                  dynamic::object("color", static_cast<int32_t>(0xFF0000FF))(
+                      "position", nullptr)))))}});
+}
+
 } // namespace facebook::react
 
 #endif

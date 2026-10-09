@@ -947,7 +947,9 @@ folly::dynamic HostPlatformViewProps::getDiffProps(
     if (accessibilityValue.text.has_value()) {
       accessibilityValueObject["text"] = accessibilityValue.text.value();
     }
-    result["accessibilityValue"] = accessibilityValueObject;
+    result["accessibilityValue"] = accessibilityValueObject.empty()
+        ? folly::dynamic(nullptr)
+        : accessibilityValueObject;
   }
 
   if (accessibilityActions != oldProps->accessibilityActions) {

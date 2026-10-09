@@ -224,7 +224,8 @@ folly::dynamic ImageProps::getDiffProps(const Props* prevProps) const {
     SharedColor prevTintColorValue =
         oldProps->tintColor.value_or(SharedColor{});
     if (tintColorValue != prevTintColorValue) {
-      result["tintColor"] = *tintColorValue;
+      result["tintColor"] = tintColorValue ? folly::dynamic(*tintColorValue)
+                                           : folly::dynamic(nullptr);
     }
   }
 

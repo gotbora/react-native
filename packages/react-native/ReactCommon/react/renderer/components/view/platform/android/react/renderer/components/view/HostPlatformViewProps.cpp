@@ -521,7 +521,8 @@ folly::dynamic HostPlatformViewProps::getDiffProps(
   }
 
   if (role != oldProps->role) {
-    result["role"] = toString(role);
+    result["role"] =
+        role.has_value() ? toString(*role) : folly::dynamic(nullptr);
   }
 
   if (opacity != oldProps->opacity) {

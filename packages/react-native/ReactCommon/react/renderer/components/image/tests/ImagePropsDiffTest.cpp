@@ -57,6 +57,15 @@ TEST(ImagePropsDiffTest, clearsHeadersWhenTheNewSourceHasNone) {
   });
 }
 
+// ReactImageManager clears the tint only for null; 0 is a transparent SRC_IN
+// tint that hides the image.
+TEST(ImagePropsDiffTest, removingTintColorEmitsNull) {
+  expectPayloads({
+      {dynamic::object("tintColor", static_cast<int32_t>(0xFFFF0000))},
+      {dynamic::object("tintColor", nullptr)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

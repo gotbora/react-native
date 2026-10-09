@@ -46,6 +46,15 @@ TEST(ViewPropsDiffTest, emitsPerspectiveUnderItsOwnName) {
       "transform", dynamic::array(dynamic::object("perspective", 850)))}});
 }
 
+// ReactViewManager resets a side to `borderWidth` only for null (NaN); 0 keeps
+// the side at width 0.
+TEST(ViewPropsDiffTest, removingASideBorderWidthEmitsNull) {
+  expectPayloads({
+      {dynamic::object("borderWidth", 4)("borderLeftWidth", 12)},
+      {dynamic::object("borderLeftWidth", nullptr)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

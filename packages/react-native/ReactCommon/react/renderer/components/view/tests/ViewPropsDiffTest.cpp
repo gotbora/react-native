@@ -40,6 +40,12 @@ TEST(ViewPropsDiffTest, emitsBackgroundSizePositionAndRepeat) {
       dynamic::array(dynamic::object("x", "no-repeat")("y", "space")))}});
 }
 
+// The Android transform parser knows `perspective`, not `perspectiveX`.
+TEST(ViewPropsDiffTest, emitsPerspectiveUnderItsOwnName) {
+  expectPayloads({{dynamic::object(
+      "transform", dynamic::array(dynamic::object("perspective", 850)))}});
+}
+
 } // namespace facebook::react
 
 #endif

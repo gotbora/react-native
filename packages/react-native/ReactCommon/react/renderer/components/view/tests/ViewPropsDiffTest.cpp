@@ -144,6 +144,14 @@ TEST(ViewPropsDiffTest, emitsAnExplicitRoleNone) {
       {{dynamic::object("role", "none")("accessibilityRole", "button")}});
 }
 
+// BaseViewManager clears the value and the content description only for null.
+TEST(ViewPropsDiffTest, removingAccessibilityValueEmitsNull) {
+  expectPayloads({
+      {dynamic::object("accessibilityValue", dynamic::object("text", "50%"))},
+      {dynamic::object("accessibilityValue", nullptr)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

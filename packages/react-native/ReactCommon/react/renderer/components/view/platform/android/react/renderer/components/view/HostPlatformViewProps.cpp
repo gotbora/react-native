@@ -159,7 +159,7 @@ static void updateBorderWidthPropValue(
     if (newValue.has_value()) {
       result[propName] = newValue.value();
     } else {
-      result[propName] = NULL;
+      result[propName] = nullptr;
     }
   }
 }

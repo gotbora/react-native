@@ -120,6 +120,16 @@ TEST(ViewPropsDiffTest, emitsTheWholeAccessibilityStateWhenOneMemberChanges) {
   });
 }
 
+// React sends a removed prop as null on top of the previous props.
+// BaseViewManager clears the role only for null, and
+// AccessibilityRole.fromValue("") throws.
+TEST(ViewPropsDiffTest, removingAccessibilityRoleEmitsNull) {
+  expectPayloads({
+      {dynamic::object("accessibilityRole", "button")},
+      {dynamic::object("accessibilityRole", nullptr)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

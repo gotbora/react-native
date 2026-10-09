@@ -923,7 +923,9 @@ folly::dynamic HostPlatformViewProps::getDiffProps(
   }
 
   if (accessibilityRole != oldProps->accessibilityRole) {
-    result["accessibilityRole"] = accessibilityRole;
+    result["accessibilityRole"] = accessibilityRole.empty()
+        ? folly::dynamic(nullptr)
+        : folly::dynamic(accessibilityRole);
   }
 
   if (accessibilityLanguage != oldProps->accessibilityLanguage) {

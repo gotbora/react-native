@@ -179,10 +179,9 @@ AccessibilityProps::AccessibilityProps(
   auto* accessibilityRoleValue = rawProps.at("accessibilityRole");
   auto* roleValue = rawProps.at("role");
 
-  if (accessibilityRoleValue == nullptr ||
-      !accessibilityRoleValue->hasValue()) {
+  if (accessibilityRoleValue == nullptr) {
     accessibilityRole = sourceProps.accessibilityRole;
-  } else {
+  } else if (accessibilityRoleValue->hasValue()) {
     fromRawValue(context, *accessibilityRoleValue, accessibilityRole);
   }
 

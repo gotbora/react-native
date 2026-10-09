@@ -40,6 +40,23 @@ TEST(ImagePropsDiffTest, multipleSourcesCarrySizesAndHeaders) {
       "headers", headers)}});
 }
 
+// ReactImageManager ignores a null headers prop, so only an empty map clears
+// the headers of the previous source.
+TEST(ImagePropsDiffTest, clearsHeadersWhenTheNewSourceHasNone) {
+  dynamic headers = dynamic::object("Authorization", "old");
+  expectPayloads({
+      {dynamic::object(
+          "source",
+          dynamic::array(
+              dynamic::object("uri", "https://a")("headers", headers)))(
+          "headers", headers)},
+      {dynamic::object(
+           "source", dynamic::array(dynamic::object("uri", "https://b")))(
+           "headers", nullptr),
+       dynamic::object("headers", dynamic::object())},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

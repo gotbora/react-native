@@ -64,6 +64,18 @@ TEST(ViewPropsDiffTest, boxShadowWithoutColorOmitsColor) {
               "spreadDistance", 0)("inset", false)))}});
 }
 
+// FilterHelper defaults an absent drop shadow color to black; 0 is
+// transparent.
+TEST(ViewPropsDiffTest, dropShadowWithoutColorOmitsColor) {
+  expectPayloads({{dynamic::object(
+      "filter",
+      dynamic::array(
+          dynamic::object(
+              "dropShadow",
+              dynamic::object("offsetX", 0)("offsetY", 4)(
+                  "standardDeviation", 4))))}});
+}
+
 } // namespace facebook::react
 
 #endif

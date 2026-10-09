@@ -578,7 +578,8 @@ folly::dynamic HostPlatformViewProps::getDiffProps(
   }
 
   if (shadowColor != oldProps->shadowColor) {
-    result["shadowColor"] = *shadowColor;
+    result["shadowColor"] =
+        shadowColor ? folly::dynamic(*shadowColor) : folly::dynamic(nullptr);
   }
 
   if (shadowOpacity != oldProps->shadowOpacity) {

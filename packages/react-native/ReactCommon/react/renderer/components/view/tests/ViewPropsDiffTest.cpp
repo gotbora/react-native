@@ -55,6 +55,15 @@ TEST(ViewPropsDiffTest, removingASideBorderWidthEmitsNull) {
   });
 }
 
+// BoxShadow.parse defaults an absent color to black; 0 is transparent.
+TEST(ViewPropsDiffTest, boxShadowWithoutColorOmitsColor) {
+  expectPayloads({{dynamic::object(
+      "boxShadow",
+      dynamic::array(
+          dynamic::object("offsetX", 0)("offsetY", 4)("blurRadius", 8)(
+              "spreadDistance", 0)("inset", false)))}});
+}
+
 } // namespace facebook::react
 
 #endif

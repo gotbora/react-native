@@ -49,7 +49,13 @@ HostPlatformScrollViewProps::HostPlatformScrollViewProps(
           rawProps,
           "endFillColor",
           sourceProps.endFillColor,
-          clearColor())) {}
+          clearColor())),
+      scrollsChildToFocus(convertRawProp(
+          context,
+          rawProps,
+          "scrollsChildToFocus",
+          sourceProps.scrollsChildToFocus,
+          true)) {}
 
 void HostPlatformScrollViewProps::setProp(
     const PropsParserContext& context,
@@ -69,6 +75,7 @@ void HostPlatformScrollViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(fadingEdgeLength);
     RAW_SET_PROP_SWITCH_CASE_BASIC(overScrollMode);
     RAW_SET_PROP_SWITCH_CASE_BASIC(endFillColor);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(scrollsChildToFocus);
   }
 }
 
@@ -96,7 +103,11 @@ SharedDebugStringConvertibleList HostPlatformScrollViewProps::getDebugProps()
           debugStringConvertibleItem(
               "endFillColor",
               endFillColor,
-              defaultScrollViewProps.endFillColor)};
+              defaultScrollViewProps.endFillColor),
+          debugStringConvertibleItem(
+              "scrollsChildToFocus",
+              scrollsChildToFocus,
+              defaultScrollViewProps.scrollsChildToFocus)};
 }
 #endif
 
@@ -378,6 +389,10 @@ folly::dynamic HostPlatformScrollViewProps::getDiffProps(
 
   if (endFillColor != oldProps->endFillColor) {
     result["endFillColor"] = *endFillColor;
+  }
+
+  if (scrollsChildToFocus != oldProps->scrollsChildToFocus) {
+    result["scrollsChildToFocus"] = scrollsChildToFocus;
   }
 
   return result;

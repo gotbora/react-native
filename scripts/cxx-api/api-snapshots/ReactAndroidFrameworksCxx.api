@@ -2044,6 +2044,7 @@ class facebook::react::HostPlatformScrollViewProps : public facebook::react::Bas
   public HostPlatformScrollViewProps() = default;
   public HostPlatformScrollViewProps(const facebook::react::PropsParserContext& context, const facebook::react::HostPlatformScrollViewProps& sourceProps, const facebook::react::RawProps& rawProps);
   public bool nestedScrollEnabled;
+  public bool scrollsChildToFocus;
   public bool sendMomentumEvents;
   public facebook::react::SharedColor endFillColor;
   public folly::dynamic fadingEdgeLength;

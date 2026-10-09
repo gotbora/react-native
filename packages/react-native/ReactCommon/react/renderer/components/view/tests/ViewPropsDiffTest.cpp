@@ -130,6 +130,20 @@ TEST(ViewPropsDiffTest, removingAccessibilityRoleEmitsNull) {
   });
 }
 
+// BaseViewManager falls back to accessibilityRole only for a null role.
+TEST(ViewPropsDiffTest, removingRoleEmitsNull) {
+  expectPayloads({
+      {dynamic::object("role", "button")},
+      {dynamic::object("role", nullptr)},
+  });
+}
+
+// An explicit role="none" overrides accessibilityRole.
+TEST(ViewPropsDiffTest, emitsAnExplicitRoleNone) {
+  expectPayloads(
+      {{dynamic::object("role", "none")("accessibilityRole", "button")}});
+}
+
 } // namespace facebook::react
 
 #endif

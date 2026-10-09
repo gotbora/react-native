@@ -22,6 +22,8 @@ void expectPayloads(const std::vector<PropsCommit>& commits) {
   expectPayloadsMatchRawProps<ViewProps>(commits);
 }
 
+const auto kRed = static_cast<int32_t>(0xFFFF0000);
+
 } // namespace
 
 // ReactViewManager has setters for all three; with
@@ -74,6 +76,15 @@ TEST(ViewPropsDiffTest, dropShadowWithoutColorOmitsColor) {
               "dropShadow",
               dynamic::object("offsetX", 0)("offsetY", 4)(
                   "standardDeviation", 4))))}});
+}
+
+// BaseViewManager.setShadowColor resets to black for null; 0 makes the
+// elevation shadow transparent.
+TEST(ViewPropsDiffTest, removingShadowColorEmitsNull) {
+  expectPayloads({
+      {dynamic::object("elevation", 8)("shadowColor", kRed)},
+      {dynamic::object("shadowColor", nullptr)},
+  });
 }
 
 } // namespace facebook::react

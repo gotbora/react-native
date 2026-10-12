@@ -43,10 +43,11 @@ class BaseScrollViewProps : public ViewProps {
   bool automaticallyAdjustKeyboardInsets{false};
 #ifdef ANDROID
   // ReactScrollView's initial rate.
-  Float decelerationRate{0.985f};
+  static constexpr Float kDefaultDecelerationRate = 0.985f;
 #else
-  Float decelerationRate{0.998f};
+  static constexpr Float kDefaultDecelerationRate = 0.998f;
 #endif
+  Float decelerationRate{kDefaultDecelerationRate};
   Float endDraggingSensitivityMultiplier{1};
   bool directionalLockEnabled{};
   ScrollViewIndicatorStyle indicatorStyle{};

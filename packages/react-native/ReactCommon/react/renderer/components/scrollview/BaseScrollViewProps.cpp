@@ -15,12 +15,6 @@
 
 namespace facebook::react {
 
-#ifdef ANDROID
-static constexpr Float defaultDecelerationRate = 0.985f;
-#else
-static constexpr Float defaultDecelerationRate = 0.998f;
-#endif
-
 // TODO (T28334063): Consider for codegen.
 BaseScrollViewProps::BaseScrollViewProps(
     const PropsParserContext& context,
@@ -86,7 +80,7 @@ BaseScrollViewProps::BaseScrollViewProps(
           rawProps,
           "decelerationRate",
           sourceProps.decelerationRate,
-          defaultDecelerationRate)),
+          kDefaultDecelerationRate)),
       endDraggingSensitivityMultiplier(convertRawProp(
           context,
           rawProps,

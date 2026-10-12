@@ -30,6 +30,18 @@ TEST(ScrollViewPropsDiffTest, emitsScrollsChildToFocus) {
   expectPayloads({{dynamic::object("scrollsChildToFocus", false)}});
 }
 
+// Android ScrollViews start with snapping alignment disabled, and
+// setSnapToAlignment disables it for null.
+TEST(
+    ScrollViewPropsDiffTest,
+    keepsAnExplicitSnapToAlignmentStartApartFromUnset) {
+  expectPayloads({
+      {dynamic::object("snapToAlignment", "start")},
+      {dynamic::object("snapToAlignment", "center")},
+      {dynamic::object("snapToAlignment", nullptr)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

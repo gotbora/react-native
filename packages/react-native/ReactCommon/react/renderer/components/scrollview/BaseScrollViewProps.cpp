@@ -427,10 +427,7 @@ SharedDebugStringConvertibleList BaseScrollViewProps::getDebugProps() const {
               "snapToInterval",
               snapToInterval,
               defaultScrollViewProps.snapToInterval),
-          debugStringConvertibleItem(
-              "snapToAlignment",
-              snapToAlignment,
-              defaultScrollViewProps.snapToAlignment),
+          debugStringConvertibleItem("snapToAlignment", snapToAlignment),
           debugStringConvertibleItem(
               "disableIntervalMomentum",
               disableIntervalMomentum,

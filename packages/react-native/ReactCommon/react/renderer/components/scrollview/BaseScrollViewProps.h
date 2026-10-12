@@ -63,7 +63,7 @@ class BaseScrollViewProps : public ViewProps {
   Point contentOffset{};
   EdgeInsets scrollIndicatorInsets{};
   Float snapToInterval{};
-  ScrollViewSnapToAlignment snapToAlignment{};
+  std::optional<ScrollViewSnapToAlignment> snapToAlignment{};
   bool disableIntervalMomentum{false};
   std::vector<Float> snapToOffsets{};
   bool snapToStart{true};

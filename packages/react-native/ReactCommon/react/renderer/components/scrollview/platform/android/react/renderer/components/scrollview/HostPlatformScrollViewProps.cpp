@@ -312,17 +312,9 @@ folly::dynamic HostPlatformScrollViewProps::getDiffProps(
   }
 
   if (snapToAlignment != oldProps->snapToAlignment) {
-    switch (snapToAlignment) {
-      case ScrollViewSnapToAlignment::Start:
-        result["snapToAlignment"] = "start";
-        break;
-      case ScrollViewSnapToAlignment::Center:
-        result["snapToAlignment"] = "center";
-        break;
-      case ScrollViewSnapToAlignment::End:
-        result["snapToAlignment"] = "end";
-        break;
-    }
+    result["snapToAlignment"] = snapToAlignment.has_value()
+        ? toString(*snapToAlignment)
+        : folly::dynamic(nullptr);
   }
 
   if (disableIntervalMomentum != oldProps->disableIntervalMomentum) {

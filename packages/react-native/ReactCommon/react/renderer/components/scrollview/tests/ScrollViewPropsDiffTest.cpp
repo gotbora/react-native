@@ -42,6 +42,17 @@ TEST(
   });
 }
 
+// Android ScrollViews start decelerating at 0.985 (ReactScrollViewHelper).
+// A removed rate restores it; Props 1.5 sends null, which the setter reads as
+// 0.
+TEST(ScrollViewPropsDiffTest, emitsAnExplicitDecelerationRate) {
+  expectPayloads({
+      {dynamic::object("decelerationRate", 0.998)},
+      {dynamic::object("decelerationRate", nullptr),
+       dynamic::object("decelerationRate", 0.985)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

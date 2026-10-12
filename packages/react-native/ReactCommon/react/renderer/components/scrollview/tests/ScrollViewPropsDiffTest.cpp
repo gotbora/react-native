@@ -53,6 +53,18 @@ TEST(ScrollViewPropsDiffTest, emitsAnExplicitDecelerationRate) {
   });
 }
 
+// The ScrollView managers turn both off for null.
+TEST(ScrollViewPropsDiffTest, removingNestedScrollAndMomentumEventsEmitsFalse) {
+  expectPayloads({
+      {dynamic::object("nestedScrollEnabled", true)(
+          "sendMomentumEvents", true)},
+      {dynamic::object("nestedScrollEnabled", nullptr)(
+           "sendMomentumEvents", nullptr),
+       dynamic::object("nestedScrollEnabled", false)(
+           "sendMomentumEvents", false)},
+  });
+}
+
 } // namespace facebook::react
 
 #endif

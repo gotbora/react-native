@@ -66,6 +66,28 @@ TEST(ImagePropsDiffTest, removingTintColorEmitsNull) {
   });
 }
 
+// ReactImageView reads the cache policy and the sizes of each source, and
+// ReactImageManager the headers; a source with the same URI can change them.
+TEST(ImagePropsDiffTest, emitsASameUriSourceWhenItsOtherFieldsChange) {
+  dynamic headers = dynamic::object("Authorization", "old");
+  dynamic source = dynamic::object("uri", "https://a")("width", 10)(
+      "height", 20)("scale", 1)("cache", "default")("headers", headers);
+  std::vector<PropsCommit> commits{
+      {dynamic::object("source", dynamic::array(source))("headers", headers)}};
+  dynamic changes = dynamic::object("cache", "reload")("width", 30)("scale", 2);
+  for (const auto& [field, value] : changes.items()) {
+    source[field] = value;
+    // Props 2.0 sends the first source's headers whenever the sources change.
+    commits.push_back(
+        {dynamic::object("source", dynamic::array(source)),
+         dynamic::object("headers", headers)});
+  }
+  source["headers"] = dynamic::object("Authorization", "new");
+  commits.push_back({dynamic::object("source", dynamic::array(source))(
+      "headers", source["headers"])});
+  expectPayloads(commits);
+}
+
 } // namespace facebook::react
 
 #endif
